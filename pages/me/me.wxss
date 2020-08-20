@@ -1,0 +1,8 @@
+/* pages/me/me.wxss */
+.avt-bg{
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

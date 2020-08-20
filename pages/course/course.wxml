@@ -1,0 +1,7 @@
+ <view class="cu-bar bg-white" style="margin-top:{{statusBar}}px">
+ 	<view class="action sub-title">
+ 		<text class="text-xl text-bold text-yellow">课程</text>
+ 		<text class="text-ABC text-yellow">course</text>
+ 		<!-- last-child选择器-->
+ 	</view>
+ </view>

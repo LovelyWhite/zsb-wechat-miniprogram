@@ -1,0 +1,56 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/me/me",
+    "pages/course/course",
+    "pages/mycourse/mycourse",
+    "pages/myorder/myorder",
+    "pages/meinformation/meinformation",
+    "pages/shop/shop",
+    "pages/subjectselect/subjectselect"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "selectedColor": "#000",
+    "color": "#999",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "主页",
+        "iconPath": "/assests/icons/home.png",
+        "selectedIconPath": "/assests/icons/home.png"
+      },
+      {
+        "pagePath": "pages/course/course",
+        "text": "课程",
+        "iconPath": "/assests/icons/course.png",
+        "selectedIconPath": "/assests/icons/course.png"
+      },
+      {
+        "pagePath": "pages/shop/shop",
+        "text": "商城",
+        "iconPath": "/assests/icons/shop.png",
+        "selectedIconPath": "/assests/icons/shop.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "/assests/icons/me.png",
+        "selectedIconPath": "/assests/icons/me.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
+  },
+  "debug": true,
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

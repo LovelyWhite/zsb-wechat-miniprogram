@@ -1,0 +1,47 @@
+<scroll-view scroll-y class="scrollPage">
+	<view class="bg-gradual-blue avt-bg">
+		<view bindtap="navigateMeInformation">
+			<view class="cu-avatar round xl margin-tb-xs" style="background-image:url(https://lovelywhite.cn/usr/themes/Bigfa/img/header.jpg);">
+				<view class="cu-tag badge cuIcon-female bg-blue"></view>
+			</view>
+		</view>
+		<text>小白</text>
+	</view>
+	<view class="bg-white padding">
+		<view class="flex justify-around">
+			<view wx:key="{{index}}" data-nav="{{item.nav}}" wx:for="{{part1}}" bindtap="navigatePart1">
+				<view class="flex padding-sm justify-center align-center" style="flex-direction: column;">
+					<image style="width:40px;height:40px;" src="{{item.bg}}" />
+					<text class="text-df text-grey">{{item.text}}</text>
+				</view>
+			</view>
+		</view>
+	</view>
+
+	<view class="bg-white padding margin-tb-sm">
+		<text class="text-lg">我的学习</text>
+		<view class="cu-list grid col-4 no-border">
+			<view class="cu-item" wx:for="{{part2}}">
+				<view class="cuIcon-{{item.icon}} text-{{item.color}}">
+					<view class="cu-tag badge" wx:if="{{item.badge!=0}}">
+						<block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
+					</view>
+				</view>
+				<text>{{item.name}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="bg-white padding margin-tb-sm">
+		<text class="text-lg">更多服务</text>
+		<view class="cu-list grid col-4 no-border">
+			<view class="cu-item" wx:for="{{part3}}">
+				<view class="cuIcon-{{item.icon}} text-{{item.color}}">
+					<view class="cu-tag badge" wx:if="{{item.badge!=0}}">
+						<block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
+					</view>
+				</view>
+				<text>{{item.name}}</text>
+			</view>
+		</view>
+	</view>
+</scroll-view>

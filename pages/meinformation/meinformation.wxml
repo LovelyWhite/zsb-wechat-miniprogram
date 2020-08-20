@@ -1,0 +1,26 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">个人信息</view>
+</cu-custom>
+<scroll-view scroll-y>
+	<view class="cu-list menu">
+		<view class="cu-item arrow">
+			<text class="solid-bottom text-lg">头像</text>
+			<view class="action">
+				<text class="cu-avatar lg round margin-xs solid{{size?'s':''}}" style="background-image:url(https://lovelywhite.cn/usr/themes/Bigfa/img/header.jpg);"/>
+				</view>
+			</view>
+      <view class="cu-item arrow">
+			<text class="solid-bottom text-lg">昵称</text>
+				<view class="action">
+					<text class="text-grey text-sm">12314</text>
+				</view>
+			</view>
+			<view class="cu-item">
+				<text class="solid-bottom text-lg">性别</text>
+				<view class="action">
+					<switch class="switch-sex" checked></switch>
+				</view>
+			</view>
+		</view>
+</scroll-view>

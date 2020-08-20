@@ -1,0 +1,32 @@
+ <view class="cu-bar bg-white" style="margin-top:{{statusBar}}px">
+ 	<view class="action sub-title">
+ 		<text class="text-xl text-bold text-blue">商城</text>
+ 		<text class="text-ABC text-blue">market</text>
+ 		<!-- last-child选择器-->
+ 	</view>
+ </view>
+ <view class="cu-bar search bg-white">
+ 	<view class="search-form round">
+ 		<text class="cuIcon-search"></text>
+ 		<input type="text" placeholder="搜索书名、ISBN编号、作者名" confirm-type="search"></input>
+ 	</view>
+ 	<view class="action">
+ 		<button class="cu-btn bg-blue shadow-blur round" style="width:60px">搜索</button>
+ 	</view>
+ </view>
+ <scroll-view scroll-y>
+ 	<view class="cu-list menu-avatar">
+ 		<view class="cu-item" wx:key="{{index}}" wx:for="{{goods}}">
+ 			<view class="cu-avatar lg radius shadow-warp" style="background-image:url({{item.poster}});"></view>
+ 			<view class="content">
+ 				<view class="text-grey">{{item.name}}</view>
+ 				<view class="text-gray text-sm flex">
+ 					<text class="text-cut">
+							<text class=" margin-right-xs">
+              </text> 我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。
+ 					</text>
+ 				</view>
+ 			</view>
+ 		</view>
+ 	</view>
+ </scroll-view>
