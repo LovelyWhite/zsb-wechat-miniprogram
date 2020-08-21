@@ -1,4 +1,4 @@
- <view class="cu-bar bg-white" style="margin-top:{{statusBar}}px">
+ <view class="cu-bar bg-white" style="padding-top:{{statusBar}}px;min-height:{{50+statusBar}}px">
  	<view class="action sub-title">
  		<text class="text-xl text-bold text-blue">商城</text>
  		<text class="text-ABC text-blue">market</text>
@@ -11,7 +11,7 @@
  		<input type="text" placeholder="搜索书名、ISBN编号、作者名" confirm-type="search"></input>
  	</view>
  	<view class="action">
- 		<button class="cu-btn bg-blue shadow-blur round" style="width:60px">搜索</button>
+ 		<button class="cu-btn bg-blue shadow-blur round" style="width:70px">搜索</button>
  	</view>
  </view>
  <scroll-view scroll-y>

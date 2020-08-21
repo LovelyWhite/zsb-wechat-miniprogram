@@ -1,13 +1,15 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/doexercise/doexercise",
     "pages/me/me",
     "pages/course/course",
     "pages/mycourse/mycourse",
     "pages/myorder/myorder",
     "pages/meinformation/meinformation",
     "pages/shop/shop",
-    "pages/subjectselect/subjectselect"
+    "pages/subjectselect/subjectselect",
+    "pages/questbank/questbank"
   ],
   "window": {
     "backgroundTextStyle": "light",

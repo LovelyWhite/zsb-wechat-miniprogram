@@ -1,4 +1,4 @@
- <view class="cu-bar bg-white" style="margin-top:{{statusBar}}px">
+ <view class="cu-bar bg-white" style="padding-top:{{statusBar}}px;min-height:{{50+statusBar}}px">
  	<view class="action sub-title">
  		<text class="text-xl text-bold text-yellow">课程</text>
  		<text class="text-ABC text-yellow">course</text>

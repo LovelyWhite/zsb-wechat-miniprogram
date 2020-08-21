@@ -38,6 +38,13 @@ Page({
       url: "/pages/subjectselect/subjectselect"
     })
   },
+
+  navigateToTarget:function(e){
+    let item = e.currentTarget.dataset.item;
+    wx.navigateTo({
+      url: "/pages/questbank/questbank?title="+item.text
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

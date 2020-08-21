@@ -1,5 +1,6 @@
 //app.js
 App({
+  towxml:require('/towxml/index'),
   globalData: {},
   onLaunch: function () {
     wx.getSystemInfo({

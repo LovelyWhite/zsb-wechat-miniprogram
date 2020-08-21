@@ -1,0 +1,80 @@
+<wxs module="dx_utils">
+	module.exports.includes = function(st, aa) {
+		return st && st.indexOf(aa) > -1
+	}
+</wxs>
+<view class="container">
+	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+		<view slot="backText">返回</view>
+		<view slot="content">{{mode==0?"答题模式":"背题模式"}}</view>
+	</cu-custom>
+	<scroll-view class="bg-white" scroll-y style=" flex: 1;height: 1px;">
+		<view class="flex padding align-center justify-between" style="flex-direction:row">
+			<view class="flex align-center" style="flex-direction:row">
+				<image style="width:20px;height:20px;" src="/assests/icons/ansericon.png" />
+				<view class="text-df text-grey padding-lr-sm">{{question[nowIndex].type}}</view>
+			</view>
+			<view class="text-df text-grey padding-lr-sm">{{nowIndex+1+"/"+question.length}}</view>
+		</view>
+		<view wx:if="{{isLoading}}" class="margin">
+			<wux-skeleton active>
+				<wux-skeleton-paragraph rows="4" />
+			</wux-skeleton>
+		</view>
+
+		<towxml nodes="{{nowquest}}" />
+		<!-- 选择题 -->
+		<view wx:if="{{question[nowIndex].type.indexof('选')!=-1}}">
+			<view bindtap="chooseAnser" data-key="{{key}}" class="flex solid{{size?'s':''}} margin-sm {{dx_utils.includes(storeAnser[nowIndex],key)?'bg-blue':'bg-white'}} radius align-center padding-tb-sm padding-lr-lg" wx:for="{{question[nowIndex].choices}}" wx:key="*this" wx:for-index="key" wx:for-item="value" style="flex-direction:row">
+				<view class="margin-right-lg">{{key}}</view>
+				<view class="text-sm">{{value}}</view>
+			</view>
+		</view>
+	</scroll-view>
+
+	<!-- 底部操作条 -->
+	<view class="cu-bar tabbar solid{{size?'s':''}}-top bg-white">
+		<view class="action" bindtap="showAnsCard">
+			<view class="cuIcon-cu-image">
+				<image src="/assests/icons/paper.png"></image>
+			</view>
+			<view class="text-gray text-xs margin-top-xs">答题卡</view>
+		</view>
+		<view class="action">
+			<view class="cuIcon-cu-image">
+				<image src="/assests/icons/explore.png"></image>
+			</view>
+			<view class="text-gray text-xs margin-top-xs">答案</view>
+		</view>
+		<view class="action">
+			<view class="cuIcon-cu-image">
+				<image src="/assests/icons/help.png"></image>
+			</view>
+			<view class="text-gray text-xs margin-top-xs">求助</view>
+		</view>
+		<view class="action">
+			<view class="cuIcon-cu-image">
+				<image src="/assests/icons/wrong.png"></image>
+			</view>
+			<view class="text-gray text-xs margin-top-xs">试题纠错</view>
+		</view>
+		<view class="action" bindtap="nextQuestion">
+			<view class="cuIcon-cu-image">
+				<image src="/assests/icons/next.png"></image>
+			</view>
+			<view class="text-gray text-xs margin-top-xs">下一题</view>
+		</view>
+	</view>
+	<view class="cu-modal bottom-modal {{ansercard?'show':''}}" bindtap="hideAnsCard">
+		<view class="cu-dialog">
+			<view class="cu-bar bg-white">
+				<view class="action text-blue" bindtap="hideAnsCard">隐藏</view>
+			</view>
+			<view class="padding-xl flex justify-start">
+				<view wx:key="index" wx:for="{{question}}" bindtap="cgNowIndex" data-nowindex="{{index}}" class="margin cu-tag radius {{index==nowIndex?'text-white':'text-grey'}} lg {{index==nowIndex?'bg-blue':'bg-white'}} padding">
+					{{index+1}}
+				</view>
+			</view>
+		</view>
+	</view>
+</view>

@@ -1,13 +1,13 @@
- <view class="cu-bar bg-white" style="margin-top:{{statusBar}}px">
+ <view class="cu-bar bg-white" style="padding-top:{{statusBar}}px;min-height:{{50+statusBar}}px">
  	<view class="action sub-title" bindtap="navigateSubjetSelect">
- 		<text class="text-xl text-bold text-red">大学语文</text>
- 		<text class="text-ABC text-red">03709</text>
+ 		<text class="text-xl text-bold text-red">高等数学</text>
+ 		<text class="text-ABC text-red">037095</text>
  	</view>
  </view>
- <scroll-view scroll-y>
+ <scroll-view scroll-y="true">
  	<view class="bg-white">
  		<view class="cu-list grid col-4 no-border margin-bottom-sm">
- 			<view class="cu-item" wx:for="{{part1}}">
+ 			<view bindtap="navigateToTarget" data-item="{{item}}" class="cu-item" wx:for="{{part1}}">
  				<view class="flex padding-sm justify-center align-center" style="flex-direction: column;">
  					<image style="width:30px;height:30px;" src="{{item.bg}}" />
  					<text class="text-df text-grey">{{item.text}}</text>

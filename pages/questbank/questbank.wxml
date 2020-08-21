@@ -1,0 +1,17 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">{{title}}</view>
+</cu-custom>
+<scroll-view scroll-y>
+	<view bindtap="navigateToExercise" data-item="{{item}}" wx:for="{{questbank}}" wx:key="index" class="bg-white padding radius shadow-blur margin-sm flex justify-between" style="flex-direction:row">
+		<view>
+			<view>{{item.name}}</view>
+			<view class="text-gray text-sm margin-bottom-xs">{{item.intro}}</view>
+			<view class="flex margin-tb-xs" style="flex-direction:row">
+				<view class="cu-tag round bg-blue text-white sm">{{item.date}}</view>
+				<view class="cu-tag round bg-blue text-white sm">{{item.done}}人做过</view>
+			</view>
+		</view>
+		<wux-rater default-value="{{ item.satisfaction }}" font-size="{{ 12 }}" disabled />
+	</view>
+</scroll-view>
