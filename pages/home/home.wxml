@@ -7,7 +7,7 @@
  <scroll-view scroll-y="true">
  	<view class="bg-white">
  		<view class="cu-list grid col-4 no-border margin-bottom-sm">
- 			<view bindtap="navigateToTarget" data-item="{{item}}" class="cu-item" wx:for="{{part1}}">
+ 			<view bindtap="navigateToTarget" data-item="{{item}}" class="cu-item" wx:for="{{part1}}" wx:key="index">
  				<view class="flex padding-sm justify-center align-center" style="flex-direction: column;">
  					<image style="width:30px;height:30px;" src="{{item.bg}}" />
  					<text class="text-df text-grey">{{item.text}}</text>

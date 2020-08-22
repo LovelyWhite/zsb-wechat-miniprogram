@@ -13,7 +13,10 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-
+const RequestUrl = "http://39.106.117.227"
+const RenderUrl = RequestUrl+":8001"
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  RequestUrl: RequestUrl,
+  RenderUrl:RenderUrl
 }

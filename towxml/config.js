@@ -1,14 +1,16 @@
+const utils = require("../utils/util");
+
 module.exports = {
     // LaTex公式、yuml解析服务架设参见 https://github.com/sbfkcel/markdown-server
 
     // 数学公式解析API
     latex:{
-        api:'http://localhost:8001/?tex'
+        api:utils.RenderUrl+'/?tex'
     },
 
     // yuml图解析APPI
     yuml:{
-        api:'http://localhost:8001/?yuml'
+        api:utils.RenderUrl+'/?yuml'
     },
 
     // markdown解析配置，保留需要的选项即可
