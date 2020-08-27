@@ -1,8 +1,14 @@
 //app.js
+import {
+  promisifyAll
+} from 'miniprogram-api-promise';
+
 App({
-  towxml:require('/towxml/index'),
+  wxp:{},
+  towxml: require('/towxml/index'),
   globalData: {},
   onLaunch: function () {
+    promisifyAll(wx, this.wxp)
     wx.getSystemInfo({
       success: e => {
         this.globalData.StatusBar = e.statusBarHeight;

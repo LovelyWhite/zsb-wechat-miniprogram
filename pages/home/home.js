@@ -1,55 +1,94 @@
 // pages/home/home.js
+import {
+  API,
+  RequestUrl
+} from "../../utils/util"
+const wxp = getApp().wxp;
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    isLoad: true,
     statusBar: getApp().globalData.StatusBar,
-    part1:[{
-      bg:"/assests/icons/qianbi.png",
-      text:"每日一练"
-    },{
-      bg:"/assests/icons/jilu.png",
-      text:"考点练习"
-    },{
-      bg:"/assests/icons/diqiuyi.png",
-      text:"历年真题"
-    },{
-      bg:"/assests/icons/shiyan.png",
-      text:"模拟试题"
-    },{
-      bg:"/assests/icons/chuangyi.png",
-      text:"高频题库"
-    },{
-      bg:"/assests/icons/xueshimao.png",
-      text:"通关密卷"
-    },{
-      bg:"/assests/icons/jiaodai.png",
-      text:"考点划题"
-    },{
-      bg:"/assests/icons/fangdajing.png",
-      text:"临考要点"
-    }]
+    part1: [],
+    cardCur: 0,
+    swiperList: [{
+      id: 0,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
+    }, {
+      id: 1,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84001.jpg',
+    }, {
+      id: 2,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
+    }, {
+      id: 3,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
+    }, {
+      id: 4,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
+    }, {
+      id: 5,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
+    }, {
+      id: 6,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
+    }],
   },
-
+  // cardSwiper
+  cardSwiper(e) {
+    this.setData({
+      cardCur: e.detail.current
+    })
+  },
   navigateSubjetSelect: function () {
     wx.navigateTo({
       url: "/pages/subjectselect/subjectselect"
     })
   },
 
-  navigateToTarget:function(e){
+  navigateToTarget: function (e) {
     let item = e.currentTarget.dataset.item;
     wx.navigateTo({
-      url: "/pages/questbank/questbank?title="+item.text
+      url: "/pages/questbank/questbank?title=" + item.type
+    })
+  },
+  refreshUI: async function () {
+    this.setData({
+      isLoad: true,
+    })
+    let res = await this.getType();
+    const resData = res.data;
+    if (resData && 200 == resData.code) {
+      this.setData({
+        part1: resData.object.map(v => {
+          v.icon = RequestUrl +"/images"+ v.icon
+          return v
+        }),
+        isLoad: false,
+      })
+    }
+  },
+  getType: function () {
+    return wxp.request({
+      url: API.getType,
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.refreshUI();
   },
 
   /**

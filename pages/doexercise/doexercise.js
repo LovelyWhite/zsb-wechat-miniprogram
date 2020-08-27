@@ -89,7 +89,7 @@ Page({
     // })
     let _ts = this;
     wx.request({
-      url: 'http://127.0.0.1:5500/1234.md', //仅为示例，并非真实的接口地址,
+      url: 'http://127.0.0.1:5500/1234.html', //仅为示例，并非真实的接口地址,
       success(res) {
         console.log(res.data)
         let result = app.towxml(res.data, 'markdown', {

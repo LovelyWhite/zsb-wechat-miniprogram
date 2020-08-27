@@ -21,7 +21,6 @@
 				<wux-skeleton-paragraph rows="4" />
 			</wux-skeleton>
 		</view>
-
 		<towxml nodes="{{nowquest}}" />
 		<!-- 选择题 -->
 		<view wx:if="{{question[nowIndex].type.indexof('选')!=-1}}">

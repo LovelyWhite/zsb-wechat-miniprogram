@@ -1,18 +1,28 @@
+<view class="container">
  <view class="cu-bar bg-white" style="padding-top:{{statusBar}}px;min-height:{{50+statusBar}}px">
- 	<view class="action sub-title" bindtap="navigateSubjetSelect">
+ 	<view class="action sub-title" style="height:60rpx" bindtap="navigateSubjetSelect">
  		<text class="text-xl text-bold text-red">高等数学</text>
  		<text class="text-ABC text-red">037095</text>
  	</view>
  </view>
- <scroll-view scroll-y="true">
- 	<view class="bg-white">
+ <scroll-view  style=" flex: 1;height: 1px;" scroll-y="true" refresher-enabled refresher-triggered="{{isLoad}}" bindrefresherrefresh="refreshUI">
+ 	 	<swiper class="card-swiper bg-white"  autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
+ 		<swiper-item wx:for="{{swiperList}}" wx:key="index" class="{{cardCur==index?'cur':''}}" style="padding: 40rpx 0rpx 10rpx;">
+ 			<view class="swiper-item">
+ 				<image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
+ 				<video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
+ 			</view>
+ 		</swiper-item>
+ 	</swiper>
+	 <view class="bg-white">
  		<view class="cu-list grid col-4 no-border margin-bottom-sm">
  			<view bindtap="navigateToTarget" data-item="{{item}}" class="cu-item" wx:for="{{part1}}" wx:key="index">
  				<view class="flex padding-sm justify-center align-center" style="flex-direction: column;">
- 					<image style="width:30px;height:30px;" src="{{item.bg}}" />
- 					<text class="text-df text-grey">{{item.text}}</text>
+ 					<image style="width:30px;height:30px;" src="{{item.icon}}" />
+ 					<text class="text-df text-grey">{{item.type}}</text>
  				</view>
  			</view>
  		</view>
  	</view>
  </scroll-view>
+</view>

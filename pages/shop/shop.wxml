@@ -1,5 +1,5 @@
  <view class="cu-bar bg-white" style="padding-top:{{statusBar}}px;min-height:{{50+statusBar}}px">
- 	<view class="action sub-title">
+ 	<view class="action sub-title" style="height:60rpx">
  		<text class="text-xl text-bold text-blue">商城</text>
  		<text class="text-ABC text-blue">market</text>
  		<!-- last-child选择器-->

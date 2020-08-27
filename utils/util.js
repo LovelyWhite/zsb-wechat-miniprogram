@@ -13,10 +13,16 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-const RequestUrl = "http://39.106.117.227"
-const RenderUrl = RequestUrl+":8001"
+// const RequestUrl = "http://39.106.117.227"
+
+const RequestUrl = "http://localhost:8080"
+const API = {
+  getType: RequestUrl + "/questionbank/gettype"
+}
+const RenderUrl = RequestUrl + ":8001"
 module.exports = {
+  API: API,
   formatTime: formatTime,
   RequestUrl: RequestUrl,
-  RenderUrl:RenderUrl
+  RenderUrl: RenderUrl
 }

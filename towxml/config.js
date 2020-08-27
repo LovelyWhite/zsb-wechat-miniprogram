@@ -1,16 +1,14 @@
-const utils = require("../utils/util");
-
 module.exports = {
     // LaTex公式、yuml解析服务架设参见 https://github.com/sbfkcel/markdown-server
 
     // 数学公式解析API
     latex:{
-        api:utils.RenderUrl+'/?tex'
+        api:'http://towxml.vvadd.com/?tex'
     },
 
     // yuml图解析APPI
     yuml:{
-        api:utils.RenderUrl+'/?yuml'
+        api:'http://towxml.vvadd.com/?yuml'
     },
 
     // markdown解析配置，保留需要的选项即可
@@ -219,7 +217,7 @@ module.exports = {
 
     // wxml原生标签，该系列标签将不会被转换
     wxml:[
-        'view',
+       	'view',
         'video',
         'text',
         'image',
@@ -254,12 +252,12 @@ module.exports = {
 
     // 自定义组件
     components:[
-        'audio-player',             // 音频组件，建议保留，由于小程序原生audio存在诸多问题，towxml解决了原生音频播放器的相关问题
+        //'audio-player',             // 音频组件，建议保留，由于小程序原生audio存在诸多问题，towxml解决了原生音频播放器的相关问题
         // 'echarts',                  // echarts图表支持
         'latex',                    // 数学公式支持
-        'table',                    // 表格支持
-        'todogroup',                // todo支持
-        'yuml',                     // yuml图表支持
+        //'table',                    // 表格支持
+        //'todogroup',                // todo支持
+        //'yuml',                     // yuml图表支持
         'img'                       // 图片解析组件
     ],
 
