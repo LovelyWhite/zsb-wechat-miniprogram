@@ -15,9 +15,11 @@ const formatNumber = n => {
 }
 // const RequestUrl = "http://39.106.117.227"
 
-const RequestUrl = "http://localhost:8080"
+const RequestUrl = "http://192.168.123.216:8080"
 const API = {
-  getType: RequestUrl + "/questionbank/gettype"
+  getAllType: RequestUrl + "/questionbank/getalltype",
+  login:RequestUrl+"/wechat/login",
+  findUserByOpenid:RequestUrl+"/user/finduserbyopenid"
 }
 const RenderUrl = RequestUrl + ":8001"
 module.exports = {

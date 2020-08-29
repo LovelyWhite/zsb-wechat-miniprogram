@@ -9,7 +9,9 @@
     "pages/meinformation/meinformation",
     "pages/shop/shop",
     "pages/subjectselect/subjectselect",
-    "pages/questbank/questbank"
+    "pages/questbank/questbank",
+    "pages/login/login",
+    "pages/phonelogin/phonelogin"
   ],
   "window": {
     "backgroundTextStyle": "light",

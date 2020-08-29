@@ -1,10 +1,12 @@
 // pages/me/me.js
+const wxp = getApp().wxp;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    loginData: getApp().globalData.loginData,
     part1: [{
         bg: "/assests/icons/bookshelf.png",
         text: "我的课程",
@@ -90,23 +92,35 @@ Page({
     }]
   },
 
-  navigatePart1:function(e){
+  navigatePart1: function (e) {
     wx.navigateTo({
       url: e.currentTarget.dataset.nav
     })
   },
-  navigateMeInformation:function(e){
-    wx.navigateTo({
-      url: '/pages/meinformation/meinformation'
+  navigateMeInformation: function (e) {
+    if (this.data.loginData) {
+      wx.navigateTo({
+        url: '/pages/meinformation/meinformation'
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/login/login'
+      })
+    }
+  },
+  updateInformation:function(){
+    this.setData({
+      loginData:getApp().globalData.loginData
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+   
   },
-
+  login: function () {
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -118,9 +132,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.updateInformation()
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

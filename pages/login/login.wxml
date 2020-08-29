@@ -1,0 +1,31 @@
+<view class="container">
+	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+		<view slot="backText">返回</view>
+		<view slot="content">登录</view>
+	</cu-custom>
+	<view class="bg-white flex" style="flex:1;flex-direction:column">
+		<view class="flex align-center justify-center" style="flex-direction:column;height:40%;flex:1">
+			<image class="cu-avatar round xl margin-tb-xs" src="{{loginData?'':'/assests/icons/loginavatar.png'}}">
+			</image>
+			<text class="text-black text-bold">麦夕专升本</text>
+		</view>
+		<view class="flex align-center justify-center" style="flex-direction:column;height:40%;flex:1">
+			<button class="bg-blue solid-bottom text-df margin-tb-sm" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">微信登录</button>
+			<text bindtap="navigateToPhoneLogin" class="solid-bottom text-grey text-sm">手机号登录/注册</text>
+		</view>
+		<text class="text-center padding solid-bottom text-grey text-xs">登录代表您已同意麦夕专升本用户协议、隐私协议</text>
+	</view>
+	<view class="cu-modal {{showModal?'show':''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar bg-white justify-end">
+				<view class="content">{{modalTitle}}</view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-xl">
+				{{modalContent}}
+			</view>
+		</view>
+	</view>
+</view>

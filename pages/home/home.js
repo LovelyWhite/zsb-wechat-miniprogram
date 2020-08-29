@@ -81,7 +81,7 @@ Page({
   },
   getType: function () {
     return wxp.request({
-      url: API.getType,
+      url: API.getAllType,
     })
   },
   /**
@@ -90,7 +90,6 @@ Page({
   onLoad: function (options) {
     this.refreshUI();
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
