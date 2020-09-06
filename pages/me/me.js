@@ -1,3 +1,5 @@
+const { API } = require("../../utils/util");
+
 // pages/me/me.js
 const wxp = getApp().wxp;
 Page({
@@ -6,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loginData: getApp().globalData.loginData,
+    loginData: wx.getStorageSync('userInfo'),
     part1: [{
         bg: "/assests/icons/bookshelf.png",
         text: "我的课程",
@@ -110,14 +112,20 @@ Page({
   },
   updateInformation:function(){
     this.setData({
-      loginData:getApp().globalData.loginData
+      loginData:wx.getStorageSync('userInfo')
     })
+  },
+  updateInformationInternet: async function(){
+   let data = await wxp.requestWithToken(API.findUserByOpenid,{
+    openid:wx.getStorageSync("token")
+   });
+   console.log(data);
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   
+   this.updateInformationInternet();
   },
   login: function () {
   },

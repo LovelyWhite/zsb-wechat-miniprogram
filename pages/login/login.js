@@ -18,28 +18,17 @@ Page({
     let detail = e.detail;
     delete detail.userInfo;
     console.log(detail);
-    let {
-      code
-    } = await wxp.login();
+    let {code} = await wxp.login();
     detail.code = code;
-    let result = await wxp.request({
-      url: API.login,
-      method: "POST",
-      data: detail
-    })
-    console.log(result);
-    let data = result.data;
-
-    if(200 == data.code){
+    let data = await wxp.requestWithToken(API.login,detail,"POST")
+    if (data && 200 == data.code) {
       wx.setStorageSync('token', data.object.token);
       wx.setStorageSync('userInfo', data.object.user);
-      getApp().globalData.loginData = data.object.user
       wx.switchTab({
         url: '../me/me',
       })
-    }
-    else{
-      this.showModal("提示",data.message);
+    } else {
+      this.showModal("提示", data.message);
     }
   },
   showModal: function (title, content) {
@@ -62,9 +51,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
-  },
+  onLoad: function (options) {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成

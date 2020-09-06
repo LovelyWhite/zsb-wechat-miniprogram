@@ -4,7 +4,7 @@
 </cu-custom>
 <scroll-view scroll-y>
 	<view class="cu-list menu">
-		<view class="cu-item arrow">
+		<view class="cu-item ">
 			<text class="solid-bottom text-lg">头像</text>
 			<view class="action">
 				<view class="cu-avatar round lg margin">
@@ -12,7 +12,7 @@
 			</view>
 				</view>
 			</view>
-      <view class="cu-item arrow">
+      <view class="cu-item">
 			<text class="solid-bottom text-lg">昵称</text>
 				<view class="action">
 					<text class="text-grey text-sm">{{loginData.nickname}}</text>
@@ -21,7 +21,7 @@
 			<view class="cu-item">
 				<text class="solid-bottom text-lg">性别</text>
 				<view class="action">
-					<switch class="switch-sex"  checked="{{'男'==loginData.sex?true:false}}"></switch>
+					<switch class="switch-sex" checked="{{'男'==loginData.sex?true:false}}"></switch>
 				</view>
 			</view>
 		</view>

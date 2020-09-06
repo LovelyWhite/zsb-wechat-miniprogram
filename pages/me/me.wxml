@@ -8,7 +8,7 @@
 		</view>
 		<text>{{loginData?loginData.nickname:'登录/注册'}}</text>
 	</view>
-	<view class="bg-white padding">
+	<view class="bg-white padding margin-bottom">
 		<view class="flex justify-around">
 			<view wx:key="index" data-nav="{{item.nav}}" wx:for="{{part1}}" bindtap="navigatePart1">
 				<view class="flex padding-sm justify-center align-center" style="flex-direction: column;">

@@ -19,7 +19,11 @@ const RequestUrl = "http://192.168.123.216:8080"
 const API = {
   getAllType: RequestUrl + "/questionbank/getalltype",
   login:RequestUrl+"/wechat/login",
-  findUserByOpenid:RequestUrl+"/user/finduserbyopenid"
+  findUserByOpenid:RequestUrl+"/user/finduserbyopenid",
+  changeSexByopenid:RequestUrl+"/user/changesexbyopenid",
+  findQuestionBank:RequestUrl+"/questionbank/findquestionbankbyany",
+  getAllSubject:RequestUrl+"/subject/getallsubject",
+  updateLearning:RequestUrl+"/user/updatelearning"
 }
 const RenderUrl = RequestUrl + ":8001"
 module.exports = {

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loginData:getApp().globalData.loginData
+    loginData:wx.getStorageSync('userInfo')
   },
 
   /**

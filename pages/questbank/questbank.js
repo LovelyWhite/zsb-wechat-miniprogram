@@ -1,4 +1,6 @@
 // pages/questbank/questbank.js
+import {API} from "../../utils/util"
+const wxp = getApp().wxp;
 Page({
 
   /**
@@ -36,10 +38,24 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      title: options.title
+      title: options.title,
+      typeId:options.typeId
+    },()=>{
+      this.updateQuestionBank();
     })
   },
+  updateQuestionBank:async function(){
+    // findQuestionBank
+    let data = await wxp.requestWithToken(API.findQuestionBank,{
+      typeid:this.data.typeId,
+      secondsubjectid:wx.getStorageSync('userInfo').secondsubject.id
+    });
+    if (data && 200 == data.code) {
 
+    } else {
+
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

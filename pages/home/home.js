@@ -12,6 +12,10 @@ Page({
    */
   data: {
     isLoad: true,
+    showModal:false,
+    modalTitle:"",
+    modalContent:"",
+    loginData: wx.getStorageSync("userInfo"),
     statusBar: getApp().globalData.StatusBar,
     part1: [],
     cardCur: 0,
@@ -21,8 +25,8 @@ Page({
       url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
     }, {
       id: 1,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84001.jpg',
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84001.jpg',
     }, {
       id: 2,
       type: 'image',
@@ -45,6 +49,18 @@ Page({
       url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
     }],
   },
+  showModal: function (title, content) {
+    this.setData({
+      modalTitle: title,
+      modalContent: content,
+      showModal: true
+    })
+  },
+  hideModal: function () {
+    this.setData({
+      showModal: false
+    })
+  },
   // cardSwiper
   cardSwiper(e) {
     this.setData({
@@ -52,37 +68,47 @@ Page({
     })
   },
   navigateSubjetSelect: function () {
-    wx.navigateTo({
-      url: "/pages/subjectselect/subjectselect"
-    })
+    if (this.data.loginData) {
+      wx.navigateTo({
+        url: "/pages/subjectselect/subjectselect"
+      })
+    }
+    else{
+      this.showModal("提示","您尚未登陆");
+    }
   },
 
   navigateToTarget: function (e) {
-    let item = e.currentTarget.dataset.item;
-    wx.navigateTo({
-      url: "/pages/questbank/questbank?title=" + item.type
-    })
+    if(this.data.loginData){
+      if(this.data.loginData.secondsubject){
+        let item = e.currentTarget.dataset.item;
+        console.log(item);
+        wx.navigateTo({
+          url: "/pages/questbank/questbank?title=" + item.type+"&typeId="+item.id
+        })
+      }
+      else{
+        this.showModal("提示","请先选择要学习的科目");
+      }
+    }
+    else{
+      this.showModal("提示","您尚未登陆");
+    }
   },
   refreshUI: async function () {
     this.setData({
       isLoad: true,
     })
-    let res = await this.getType();
-    const resData = res.data;
-    if (resData && 200 == resData.code) {
+    let data = await wxp.requestWithToken(API.getAllType)
+    if (data && 200 == data.code) {
       this.setData({
-        part1: resData.object.map(v => {
-          v.icon = RequestUrl +"/images"+ v.icon
+        part1: data.object.map(v => {
+          v.icon = RequestUrl + "/images" + v.icon
           return v
         }),
         isLoad: false,
       })
     }
-  },
-  getType: function () {
-    return wxp.request({
-      url: API.getAllType,
-    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -101,7 +127,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      loginData: wx.getStorageSync('userInfo')
+    })
   },
 
   /**

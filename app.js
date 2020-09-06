@@ -2,43 +2,44 @@
 import {
   promisifyAll
 } from 'miniprogram-api-promise';
-import {
-  API,
-} from "./utils/util"
+
 App({
   wxp: {},
   towxml: require('/towxml/index'),
-  globalData: {
-    loginData: null,
-  },
+  globalData: {},
   onLaunch: function () {
     promisifyAll(wx, this.wxp)
-    let token = wx.getStorageSync('token');
-    this.globalData.loginData = wx.getStorageSync('userInfo');
-    if(token && this.globalData.loginData){
-      console.log(this.globalData.loginData);
-      this.wxp.request({
-        url: API.findUserByOpenid,
-        header: {
-          token: token
-        },
-        data: {
-          openid: this.globalData.loginData.openid
+    console.log(wx.getStorageSync('token'));
+    let _ts = this;
+    this.wxp.requestWithToken = async function (url, d,method) {
+      console.log(url, d)
+      try {
+        let result = await _ts.wxp.request({
+          url: url,
+          method: method,
+          header: {
+            "token": wx.getStorageSync('token')
+          },
+          data: d
+        })
+        let data = result.data;
+        if (200 == data.code) {
+          return data;
         }
-      }).then(res => {
-        let data = res.data;
-        console.log(data);
-        if(200 != data.code){
-          this.globalData.loginData = null;
-          wx.setStorageSync('userInfo',null);
+        //token 失效
+        else if (104 == data.code) {
+          wx.setStorageSync('userInfo', null);
+          wx.setStorageSync('token', null);
+          wx.switchTab({
+            url: "/pages/me/me"
+          })
+        } else {
+          return data;
         }
-        else{
-          wx.setStorageSync('token', data.object.token);
-          wx.setStorageSync('userInfo', data.object.user);
-        }
-      }).catch(res => {
-        console.log(res);
-      })
+      } catch (e) {
+        console.log(e);
+        return null;
+      }
     }
     wx.getSystemInfo({
       success: e => {
