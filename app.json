@@ -11,7 +11,8 @@
     "pages/subjectselect/subjectselect",
     "pages/questbank/questbank",
     "pages/login/login",
-    "pages/phonelogin/phonelogin"
+    "pages/phonelogin/phonelogin",
+    "pages/quesbankdetail/quesbankdetail"
   ],
   "window": {
     "backgroundTextStyle": "light",

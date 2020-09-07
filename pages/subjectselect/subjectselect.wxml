@@ -3,9 +3,9 @@
 		<view slot="backText">返回</view>
 		<view slot="content">科目选择</view>
 	</cu-custom>
-	<scroll-view class="VerticalMain" scroll-y scroll-with-animation scroll-into-view="main-{{MainCur}}" style=" flex: 1;height: 1px;" scroll-y="true" refresher-enabled refresher-triggered="{{isLoad}}" bindrefresherrefresh="getAllSubject">
+	<scroll-view class="VerticalMain" scroll-y scroll-with-animation style=" flex: 1;height: 1px;" scroll-y="true" refresher-enabled refresher-triggered="{{isLoad}}" bindrefresherrefresh="getAllSubject">
 		<view class="margin-bottom">
-			<view class="padding-top padding-lr" wx:for="{{subjects}}" wx:key="index" id="main-{{index}}">
+			<view class="padding-top padding-lr" wx:for="{{subjects}}" wx:key="index">
 				<view class='cu-bar solid-bottom bg-white'>
 					<view class='action'>
 						<text class='cuIcon-title text-green'></text> {{item.name}} </view>

@@ -33,6 +33,7 @@ App({
           wx.switchTab({
             url: "/pages/me/me"
           })
+          return null;
         } else {
           return data;
         }

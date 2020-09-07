@@ -1,4 +1,4 @@
-<scroll-view scroll-y class="scrollPage">
+<scroll-view scroll-y  refresher-enabled refresher-triggered="{{isLoad}}" bindrefresherrefresh="updateInformationInternet">
 	<view class="bg-gradual-blue avt-bg">
 		<view bindtap="navigateMeInformation">
 			<view class="cu-avatar round xl margin-tb-xs">

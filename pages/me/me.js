@@ -1,4 +1,6 @@
-const { API } = require("../../utils/util");
+const {
+  API
+} = require("../../utils/util");
 
 // pages/me/me.js
 const wxp = getApp().wxp;
@@ -8,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isLoad:false,
     loginData: wx.getStorageSync('userInfo'),
     part1: [{
         bg: "/assests/icons/bookshelf.png",
@@ -110,25 +113,30 @@ Page({
       })
     }
   },
-  updateInformation:function(){
+  updateInformation: function () {
     this.setData({
-      loginData:wx.getStorageSync('userInfo')
+      loginData: wx.getStorageSync('userInfo')
     })
   },
-  updateInformationInternet: async function(){
-   let data = await wxp.requestWithToken(API.findUserByOpenid,{
-    openid:wx.getStorageSync("token")
-   });
-   console.log(data);
+  updateInformationInternet: async function () {
+    this.setData({
+      isLoad:true
+    })
+    let data = await wxp.requestWithToken(API.findUserByOpenid, {
+      openid: wx.getStorageSync("userInfo").openid
+    });
+    if (data && 200 == data.code) {
+      wx.setStorageSync('userInfo', data.object);
+      this.updateInformation();
+    }
+    this.setData({
+      isLoad:false
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-   this.updateInformationInternet();
-  },
-  login: function () {
-  },
+  onLoad: function (options) {},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

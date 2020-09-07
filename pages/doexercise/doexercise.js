@@ -83,10 +83,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // const eventChannel = this.getOpenerEventChannel();
-    // eventChannel.on('transfer', function (data) {
-    //   console.log(data);
-    // })
     let _ts = this;
     wx.request({
       url: 'http://127.0.0.1:5500/1234.html', //仅为示例，并非真实的接口地址,

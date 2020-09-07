@@ -1,5 +1,5 @@
 // pages/questbank/questbank.js
-import {API} from "../../utils/util"
+import {API, formatTime} from "../../utils/util"
 const wxp = getApp().wxp;
 Page({
 
@@ -8,30 +8,8 @@ Page({
    */
   data: {
     title: "",
-    questbank: [{
-      id: 1,
-      name: "120033 大学语文",
-      date: "2020-02-12",
-      done: 14,
-      satisfaction: 4,
-      intro: "2020年最新的大学语文试题"
-    }, {
-      id: 2,
-      name: "120034 大学语文",
-      date: "2020-02-14",
-      done: 455,
-      satisfaction: 4,
-      intro: "2020年最新的大学语文试题"
-    }]
-  },
-  navigateToExercise: function (e) {
-    let item = e.currentTarget.dataset.item;
-    wx.navigateTo({
-      url: '/pages/doexercise/doexercise',
-      success: (res) => {
-        res.eventChannel.emit('transfer', item);
-      }
-    })
+    isLoad:false,
+    questbank: [],
   },
   /**
    * 生命周期函数--监听页面加载
@@ -44,17 +22,31 @@ Page({
       this.updateQuestionBank();
     })
   },
+  navigateToDetail:function(e){
+    let index = e.currentTarget.dataset.index;
+    wx.navigateTo({
+      url: '/pages/quesbankdetail/quesbankdetail?index='+index
+    })
+  },
   updateQuestionBank:async function(){
-    // findQuestionBank
+    this.setData({
+      isLoad:true
+    })
     let data = await wxp.requestWithToken(API.findQuestionBank,{
       typeid:this.data.typeId,
       secondsubjectid:wx.getStorageSync('userInfo').secondsubject.id
     });
     if (data && 200 == data.code) {
-
-    } else {
-
+      this.setData({
+        questbank:data.object.map(v=>{
+          v.updatetime = formatTime(new Date(v.updatetime))
+          return v;
+        })
+      })
     }
+    this.setData({
+      isLoad:false
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

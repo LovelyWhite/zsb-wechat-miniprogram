@@ -1,17 +1,21 @@
-<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
-	<view slot="backText">返回</view>
-	<view slot="content">{{title}}</view>
-</cu-custom>
-<scroll-view scroll-y>
-	<view bindtap="navigateToExercise" data-item="{{item}}" wx:for="{{questbank}}" wx:key="index" class="bg-white padding radius shadow-blur margin-sm flex justify-between" style="flex-direction:row">
-		<view>
-			<view>{{item.name}}</view>
-			<view class="text-gray text-sm margin-bottom-xs">{{item.intro}}</view>
-			<view class="flex margin-tb-xs" style="flex-direction:row">
-				<view class="cu-tag round bg-blue text-white sm">{{item.date}}</view>
-				<view class="cu-tag round bg-blue text-white sm">{{item.done}}人做过</view>
+<view class="container">
+	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+		<view slot="backText">返回</view>
+		<view slot="content">{{title}}</view>
+	</cu-custom>
+	<scroll-view scroll-y scroll-with-animation style=" flex: 1;height: 1px;" refresher-enabled refresher-triggered="{{isLoad}}" bindrefresherrefresh="updateQuestionBank">
+		<view bindtap="navigateToDetail" data-index="{{index}}" wx:for="{{questbank}}" wx:key="index" class="bg-white padding radius shadow-blur margin-sm flex justify-between" style="flex-direction:row">
+			<view>
+				<view>{{item.name}}</view>
+				<view class="text-gray text-sm margin-bottom-xs">{{item.intro}}</view>
+				<view class="flex margin-tb-xs" style="flex-direction:row">
+					<view class="cu-tag round bg-blue text-white sm">{{item.updatetime}}</view>
+					<view class="cu-tag round bg-red text-white sm">满分:{{item.prefectscore}}</view>
+					<view class="cu-tag round bg-yellow text-white sm">及格:{{item.passscore}}</view>
+					<view wx:if="{{item.city}}" class="cu-tag round bg-grey text-white sm">{{item.city}}</view>
+				</view>
 			</view>
+			<wux-rater default-value="{{ item.satisfaction }}" font-size="{{ 12 }}" disabled />
 		</view>
-		<wux-rater default-value="{{ item.satisfaction }}" font-size="{{ 12 }}" disabled />
-	</view>
-</scroll-view>
+	</scroll-view>
+</view>

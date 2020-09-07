@@ -1,0 +1,9 @@
+<view class="container">
+	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+		<view slot="backText">返回</view>
+		<view slot="content">试题详情</view>
+	</cu-custom>
+	<view class="flex margin" style="flex-direction:column">
+    <text>{{item.name}}</text>
+	</view>
+</view>
