@@ -44,6 +44,7 @@ Page({
     if (data && 200 == data.code) {
      let userInfo =  wx.getStorageSync('userInfo');
      userInfo.secondsubject = userInfo.secondsubject?userInfo.secondsubject:{}
+     userInfo.secondsubject.id = item.id
      userInfo.secondsubject.code = item.code
      userInfo.secondsubject.name = item.name
      wx.setStorageSync('userInfo',userInfo);
