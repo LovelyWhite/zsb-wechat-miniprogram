@@ -3,7 +3,25 @@
 		<view slot="backText">返回</view>
 		<view slot="content">试题详情</view>
 	</cu-custom>
-	<view class="flex margin" style="flex-direction:column">
-    <text>{{item.name}}</text>
-	</view>
+	<scroll-view class="bg-white" scroll-y style=" flex: 1;height: 1px;" refresher-enabled refresher-triggered="{{isLoad}}" bindrefresherrefresh="updateQuestionBank">
+		<view class="flex padding margin" style="flex-direction:column;">
+			<view class="flex bg-gray text-black  text-sm radius padding" style="flex-direction:column">
+				<text class="margin-tb-xs" > 试题名称：{{item.name}}</text>
+				<text class="margin-tb-xs" > 日期：{{item.anticipatetime}}</text>
+				<text class="margin-tb-xs" > 区域：{{item.city}}</text>
+				<text class="margin-tb-xs" >及格分数 ：{{item.passscore}} 分</text>
+				<text class="margin-tb-xs" >满分 ：{{item.prefectscore}} 分</text>
+				<text class="margin-tb-xs" >做过：{{done}} 人</text>
+				<text class="margin-tb-xs" >题目数量：{{questions.length}} 题</text>
+			</view>
+			<text class="margin-tb">试题介绍</text>
+			<view class="flex bg-gray text-black  text-sm radius padding" style="flex-direction:column">
+				<scroll-view scroll-y>
+					<text class="flex" style="height:150px">{{item.intro}}</text>
+				</scroll-view>
+			</view>
+			<button class="cu-btn bg-blue lg margin-tb" bindtap="navigateToExercise">开始测试</button>
+		</view>
+	</scroll-view>
+
 </view>

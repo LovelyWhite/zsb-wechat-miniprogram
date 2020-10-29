@@ -1,7 +1,7 @@
 {
   "usingComponents": {
-    "towxml":"/towxml/towxml",
     "wux-skeleton": "wux-weapp/skeleton",
-    "wux-skeleton-paragraph": "wux-weapp/skeleton-paragraph"
+    "wux-skeleton-paragraph": "wux-weapp/skeleton-paragraph",
+    "wemark": "/wemark/wemark"
   }
 }

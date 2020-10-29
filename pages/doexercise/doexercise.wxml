@@ -9,28 +9,61 @@
 		<view slot="content">{{mode==0?"答题模式":"背题模式"}}</view>
 	</cu-custom>
 	<scroll-view class="bg-white" scroll-y style=" flex: 1;height: 1px;">
-		<view class="flex padding align-center justify-between" style="flex-direction:row">
-			<view class="flex align-center" style="flex-direction:row">
-				<image style="width:20px;height:20px;" src="/assests/icons/ansericon.png" />
-				<view class="text-df text-grey padding-lr-sm">{{question[nowIndex].type}}</view>
+		<view wx:if="!isLoad">
+			<view class="flex padding align-center justify-between" style="flex-direction:row">
+				<view class="flex align-center" style="flex-direction:row">
+					<image style="width:20px;height:20px;" src="/assests/icons/answericon.png" />
+					<view class="text-df text-grey padding-lr-sm">{{nowQuest.typename}}</view>
+				</view>
+				<view class="text-df text-grey padding-lr-sm">{{nowIndex+1+"/"+questions.length}}</view>
 			</view>
-			<view class="text-df text-grey padding-lr-sm">{{nowIndex+1+"/"+question.length}}</view>
-		</view>
-		<view wx:if="{{isLoading}}" class="margin">
-			<wux-skeleton active>
-				<wux-skeleton-paragraph rows="4" />
-			</wux-skeleton>
-		</view>
-		<towxml nodes="{{nowquest}}" />
-		<!-- 选择题 -->
-		<view wx:if="{{question[nowIndex].type.indexof('选')!=-1}}">
-			<view bindtap="chooseAnser" data-key="{{key}}" class="flex solid{{size?'s':''}} margin-sm {{dx_utils.includes(storeAnser[nowIndex],key)?'bg-blue':'bg-white'}} radius align-center padding-tb-sm padding-lr-lg" wx:for="{{question[nowIndex].choices}}" wx:key="*this" wx:for-index="key" wx:for-item="value" style="flex-direction:row">
-				<view class="margin-right-lg">{{key}}</view>
-				<view class="text-sm">{{value}}</view>
+			<view class="flex justify-center padding">
+				<wemark style="width:100%" md="{{nowQuest.title}}" highlight type="wemark"></wemark>
+			</view>
+			<!-- 选择题 -->
+			<view wx:if="{{nowQuest.type=='单选'|| nowQuest.type=='多选'}}">
+				<view bindtap="chooseAnwser" data-key="{{key}}" class="flex solid{{size?'s':''}} margin-sm radius align-center padding-lr-lg {{dx_utils.includes(storeAnswer[''+nowQuest.id],key)?'bg-blue':'bg-white'}}" wx:for="{{nowOptions}}" wx:key="key" wx:for-index="key" wx:for-item="value" style="flex-direction:row;}}">
+					<view class="text-lg padding-lr-sm">{{key}}</view>
+					<wemark md="{{value}}" link highlight type="wemark"></wemark>
+				</view>
+			</view>
+			<!-- 简答题 -->
+			<view wx:if="{{nowQuest.type == '简答'}}" class="padding">
+				<view class="margin-tb-sm solid-bottom text-lg text-black">答题卡</view>
+				<textarea bindinput="textInput" value="{{storeAnswer[''+nowQuest.id]}}" placeholder="在此输入答案" adjust-position="{{true}}" class="padding-xl radius shadow shadow-lg bg-white margin-top"></textarea>
+			</view>
+
+			<!-- 填空题-->
+			<view wx:if="{{nowQuest.type == '填空'}}" class="padding">
+				<view class="margin-tb-sm solid-bottom text-lg text-black">答题卡</view>
+				<view wx:for="{{nowFlank}}">
+					<View class="flex radius shadow bg-white padding margin-tb-sm" style="flex-direction:row;align-items:center">{{index}}.<input bindinput="fbankInput" data-index="{{index}}" value="{{storeAnswer[''+nowQuest.id][index]}}" adjust-position="{{true}}" class=" bg-white"></input>
+					</View>
+				</view>
+			</view>
+			<!-- 正确答案 -->
+			<view wx:if="{{mode==1}}" class=" padding">
+				<span wx:if="{{nowQuest.type.indexof('选')!=-1}}">
+					<view class="margin-tb-sm solid-bottom text-lg text-black">正确答案</view>
+					<span wx:for="{{nowQuest.cqans}}" wx:key="*this">
+						<span>{{item}}</span>
+					</span>
+				</span>
+				<span wx:if="{{nowQuest.type == '简答'}}">
+					{{nowQuest.saand}}
+				</span>
+				<span wx:if="{{nowQuest.type == '填空'}}">
+					<span wx:for="{{nowQuest.fbans}}" wx:key="*this" wx:for-index="fbidnex" wx:for-item="fbitem">
+						<span >{{fbitem}} </span>
+					</span>
+				</span>
 			</view>
 		</view>
 	</scroll-view>
-
+	<view class='cu-load load-modal' wx:if="{{isLoad}}">
+		<image src='/assests/icons/loginavatar.png' class='png' mode='aspectFit'></image>
+		<view class='gray-text'>加载中...</view>
+	</view>
 	<!-- 底部操作条 -->
 	<view class="cu-bar tabbar solid{{size?'s':''}}-top bg-white">
 		<view class="action" bindtap="showAnsCard">
@@ -39,40 +72,61 @@
 			</view>
 			<view class="text-gray text-xs margin-top-xs">答题卡</view>
 		</view>
-		<view class="action">
+		<view class="action" bindtap="toggleAnswer">
 			<view class="cuIcon-cu-image">
 				<image src="/assests/icons/explore.png"></image>
 			</view>
 			<view class="text-gray text-xs margin-top-xs">答案</view>
 		</view>
-		<view class="action">
+		<!-- <view class="action">
 			<view class="cuIcon-cu-image">
 				<image src="/assests/icons/help.png"></image>
 			</view>
 			<view class="text-gray text-xs margin-top-xs">求助</view>
-		</view>
+		</view> -->
 		<view class="action">
 			<view class="cuIcon-cu-image">
 				<image src="/assests/icons/wrong.png"></image>
 			</view>
 			<view class="text-gray text-xs margin-top-xs">试题纠错</view>
 		</view>
-		<view class="action" bindtap="nextQuestion">
+		<view class="action" bindtap="next">
 			<view class="cuIcon-cu-image">
 				<image src="/assests/icons/next.png"></image>
 			</view>
-			<view class="text-gray text-xs margin-top-xs">下一题</view>
+			<view wx:if="{{nowIndex < questions.length-1}}" class="text-gray text-xs margin-top-xs">下一题</view>
+			<view wx:else class="text-gray text-xs margin-top-xs">交卷</view>
 		</view>
 	</view>
-	<view class="cu-modal bottom-modal {{ansercard?'show':''}}" bindtap="hideAnsCard">
+	<view class="cu-modal bottom-modal {{anwsercard?'show':''}}" bindtap="hideAnsCard">
 		<view class="cu-dialog">
 			<view class="cu-bar bg-white">
 				<view class="action text-blue" bindtap="hideAnsCard">隐藏</view>
 			</view>
 			<view class="padding-xl flex justify-start">
-				<view wx:key="index" wx:for="{{question}}" bindtap="cgNowIndex" data-nowindex="{{index}}" class="margin cu-tag radius {{index==nowIndex?'text-white':'text-grey'}} lg {{index==nowIndex?'bg-blue':'bg-white'}} padding">
+				<view wx:key="index" wx:for="{{questions}}" bindtap="cgNowIndex" data-nowindex="{{index}}" class="margin cu-tag radius  {{index==nowIndex?'text-white':'text-grey'}} {{index==nowIndex?'bg-blue':'bg-white'}} lg  padding">
 					{{index+1}}
 				</view>
+			</view>
+		</view>
+	</view>
+
+</view>
+<view class="cu-modal {{submitModal?'show':''}}">
+	<view class="cu-dialog">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">提交</view>
+			<view class="action" bindtap="hideSubmitModal">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl">
+			确定提交试卷？
+		</view>
+		<view class="cu-bar bg-white">
+			<view class="button-row padding-lr-sm" style="width:100%;">
+				<button class="cu-btn line-blue text-blue" bindtap="hideSubmitModal">取消</button>
+				<button class="cu-btn bg-blue margin-left" bindtap="submitPaper">确定</button>
 			</view>
 		</view>
 	</view>

@@ -9,6 +9,7 @@
   "author": "lw",
   "license": "ISC",
   "dependencies": {
+    "base64-utf8": "^0.1.8",
     "miniprogram-api-promise": "^1.0.4",
     "wux-weapp": "^3.8.7"
   }

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "wux-accordion-group": "wux-weapp/accordion-group",
+    "wux-accordion": "wux-weapp/accordion",
+    "wemark": "/wemark/wemark"
+  }
+}

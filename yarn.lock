@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+base64-utf8@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/base64-utf8/-/base64-utf8-0.1.8.tgz#ba03c8ab595468fac7dea70b810b8ee6c0d9a391"
+  integrity sha512-g7YaVcV9J+17ExiNKTcK52jqbV5OsFsnK+uof1+1N5XrvwN3xP7U/WsJMkFyTTts+3QRrZygOaC095LkTVcCyA==
+
 miniprogram-api-promise@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/miniprogram-api-promise/-/miniprogram-api-promise-1.0.4.tgz#fefe9b72923fd31f88b12463b502cb457c892b4c"

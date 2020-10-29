@@ -1,3 +1,7 @@
+const {
+  utf8Decode
+} = require("../../utils/util");
+var Base64 = require('base64-utf8');
 // pages/doexercise/doexercise.js
 const app = getApp();
 Page({
@@ -6,154 +10,197 @@ Page({
    * 页面的初始数据
    */
   data: {
+    submitModal: false,
     statusBar: getApp().globalData.StatusBar,
-    /**
-     * id
-     * 题目文字
-     * 题目附图
-     * 单选答案
-     * 多选答案
-     * 判断答案
-     * 填空答案
-     * 简答题答案
-     * 选项Json字符串
-     * 试题难度级别
-     * 答对次数
-     * 答错次数
-     * 文字解析
-     * 视频解析链接
-     * 关键词
-     */
-    nowquest: {},
-    ansercard: false, //显示答题卡
-    isLoading:true,
+    nowQuest: {},
+    nowOptions: {},
+    nowFlank: [],
+    anwsercard: false, //显示答题卡
+    isLoad: true,
     nowIndex: 0,
     mode: 0, //0 代表练习模式 1代表背题模式
-    storeAnser: [],
-    question: [{
-      title: "游戏治疗中治疗者不应该做的是?",
-      type: "多选",
-      selectans: ["A"],
-      judge: undefined,
-      vacancy: undefined,
-      shortans: undefined,
-      choices: {
-        A: "从不向儿童提任何要求",
-        B: "儿童自己能做的事情,不包办代替",
-        C: "让儿童感觉到是一个关心他们、了解他们的人,是可以和他们沟通的人",
-        D: "让儿童感觉到与治疗者在一起是放松的自由的,他们可以自由探索、创造或闲逛"
-      },
-      righttime: 10,
-      wrongtime: 4,
-      video: "https://asdad/",
-      keyword: ["游戏治疗", "儿童"]
-    }, {
-      title: "游戏治疗中治疗者不应该做的是?",
-      type: "多选",
-      selectans: ["A", "B"],
-      judge: true,
-      vacancy: ["正确的"],
-      shortans: "",
-      choices: {
-        A: "从不向儿童提任何要求",
-        B: "儿童自己能做的事情,不包办代替",
-        C: "让儿童感觉到是一个关心他们、了解他们的人,是可以和他们沟通的人",
-        D: "让儿童感觉到与治疗者在一起是放松的自由的,他们可以自由探索、创造或闲逛"
-      },
-      righttime: 10,
-      wrongtime: 4,
-      video: "https://asdad/",
-      keyword: ["游戏治疗", "儿童"]
-    }, {
-      title: "## 12123 $$\\frac{1}{(\\sqrt{\\phi \\sqrt{5}}-\\phi) e^{\\frac25 \\pi}} =1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}}{1+\\frac{e^{-8\\pi}} {1+\\ldots} } } }$$",
-      type: "填空",
-      selectans: undefined,
-      judge: true,
-      vacancy: ["衣带渐宽终不悔"],
-      shortans: "",
-      choices: undefined,
-      righttime: 10,
-      wrongtime: 4,
-      video: "https://asdad/",
-      keyword: ["古诗"]
-    }]
+    storeAnswer: {},
+    questions: [],
+    questionDetail: {},
+    animation: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let _ts = this;
-    wx.request({
-      url: 'http://127.0.0.1:5500/1234.html', //仅为示例，并非真实的接口地址,
-      success(res) {
-        console.log(res.data)
-        let result = app.towxml(res.data, 'markdown', {
-          events: { // 为元素绑定的事件方法
-            tap: (e) => {
-              console.log('tap', e);
-            }
+    const pages = getCurrentPages();
+    const prevPage = pages[pages.length - 2];
+    let prevQ = JSON.stringify(prevPage.data.questions);
+    prevQ = JSON.parse(prevQ);
+    let questionDetail = prevPage.data.item;
+    let _q = prevQ.map(e => {
+      e.title = Base64.decode(e.title);
+      if (e.cqans)
+        e.cqans = JSON.parse(Base64.decode(e.cqans));
+      if (e.jqans)
+        e.jqans = JSON.parse(Base64.decode(e.jqans));
+      if (e.fbans)
+        e.fbans = JSON.parse(Base64.decode(e.fbans));
+      if (e.saand)
+        e.saand = Base64.decode(e.saand);
+      if (e.options)
+        e.options = JSON.parse(Base64.decode(e.options));
+      return e;
+    })
+    console.log(_q);
+    this.setData({
+      questions: _q,
+      questionDetail: questionDetail
+    }, () => {
+      this.render()
+    })
+
+  },
+  fbankInput(e) {
+    let index = e.currentTarget.dataset.index
+    let data = e.detail.value
+    let storeAnswer = this.data.storeAnswer;
+    const nowQues = this.data.questions[this.data.nowIndex];
+    storeAnswer['' + nowQues.id][index] = data
+    this.setData({
+      storeAnswer: storeAnswer
+    })
+  },
+  render: function () {
+    this.setData({
+      isLoad: true,
+    })
+    const nowQues = this.data.questions[this.data.nowIndex];
+    // 更新解析数据
+    this.setData({
+      nowQuest: nowQues,
+    });
+    if (nowQues.type.indexOf("选") != -1) {
+      this.setData({
+        nowOptions: nowQues.options,
+      });
+    }
+    if (nowQues.type == "填空") {
+      let storeAnswer = this.data.storeAnswer;
+      storeAnswer['' + nowQues.id] = [];
+      this.setData({
+        nowFlank: nowQues.fbans,
+        storeAnswer: storeAnswer
+      })
+    }
+    console.log(nowQues, this.data.storeAnswer);
+    this.setData({
+      isLoad: false,
+    })
+  },
+
+  textInput(e) {
+    let data = e.detail.value;
+    let nowIndex = this.data.nowIndex;
+    let nowQues = this.data.nowQues;
+    this.data.storeAnswer['' + nowQues.id] = data;
+    this.setData({
+      storeAnswer: this.data.storeAnswer
+    })
+  },
+  chooseAnwser: function (e) {
+    let key = e.currentTarget.dataset.key;
+    let nowIndex = this.data.nowIndex;
+    let nowQues = this.data.nowQues;
+    let storeAnswer = this.data.storeAnswer;
+    let ans = storeAnswer['' + nowQues.id];
+    if (ans) {
+      if (ans.length > 0) {
+        let index = ans.indexOf(key);
+        if (index > -1) {
+          ans.splice(index, 1);
+        } else {
+          if (nowQues.type == '多选') {
+            ans.push(key);
+          } else {
+            ans = [];
+            ans.push(key);
           }
-        });
-        // 更新解析数据
-        _ts.setData({
-          nowquest: result,
-          isLoading:false,
-        });
+        }
+      } else {
+        ans.push(key);
+      }
+    } else {
+      ans = [];
+      ans.push(key);
+    }
+    storeAnswer['' + nowQues.id] = ans;
+    this.setData({
+      storeAnswer: storeAnswer
+    }, () => {
+      if (nowQues.type != '多选') {
+        this.nextQuestion()
       }
     })
   },
-  chooseAnser: function (e) {
-    let key = e.currentTarget.dataset.key;
-    let nowIndex = this.data.nowIndex;
-    let nowQues = this.data.question[nowIndex];
-    let storeAnser = this.data.storeAnser;
-    if (storeAnser.length == 0) {
-      storeAnser.push([key]);
-    } else {
-      if (nowQues.type == '单选') {
-        storeAnser.shift();
-        storeAnser.push([key]);
-      } else if (nowQues.type == '多选') {
-        let _now = storeAnser[nowIndex];
-        let index = _now.indexOf(key);
-        console.log(_now,index)
-        if (index > -1) {
-          _now.splice(index, 1);
-        } else {
-          _now.push(key);
-          storeAnser[nowIndex] = _now;
-        }
-      }
-    }
+  submitPaper() {
+    wx.navigateTo({
+      url: '/pages/exerciseres/exerciseres',
+    })
+  },
+  showSubmitModal() {
+    console.log(this.data.storeAnswer);
     this.setData({
-      storeAnser: storeAnser,
-    }, () => {
+      submitModal: true
+    })
+  },
+  hideSubmitModal() {
+    this.setData({
+      submitModal: false
     })
   },
   cgNowIndex: function (e) {
     let nowIndex = e.currentTarget.dataset.nowindex;
     this.setData({
-      nowIndex: nowIndex
+      nowIndex: nowIndex,
+      nowQues: this.data.questions[nowIndex]
+    }, () => {
+      this.render();
     })
   },
   showAnsCard: function () {
     this.setData({
-      ansercard: true
+      anwsercard: true
     })
   },
   nextQuestion() {
-    if (this.data.nowIndex < this.data.question.length - 1) {
-      this.setData({
-        nowIndex: this.data.nowIndex + 1
-      })
+    this.setData({
+      nowIndex: this.data.nowIndex + 1,
+      nowQues: this.data.questions[this.data.nowIndex + 1]
+    }, () => {
+      this.render();
+    })
+  },
+  next() {
+    if (this.data.nowIndex < this.data.questions.length - 1) {
+      this.nextQuestion();
+    } else {
+      this.showSubmitModal();
     }
   },
   hideAnsCard: function () {
     this.setData({
-      ansercard: false
+      anwsercard: false
     })
   },
+  toggleAnswer: function () {
+    if (this.data.mode == 0) {
+      this.setData({
+        mode: 1
+      })
+    } else if (this.data.mode == 1) {
+      this.setData({
+        mode: 0
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

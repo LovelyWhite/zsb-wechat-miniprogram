@@ -5,7 +5,6 @@ import {
 
 App({
   wxp: {},
-  towxml: require('/towxml/index'),
   globalData: {},
   onLaunch: function () {
     promisifyAll(wx, this.wxp)

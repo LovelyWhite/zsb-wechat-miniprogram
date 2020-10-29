@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/quesbankdetail/quesbankdetail",
+    "pages/phonelogin/phonelogin",
     "pages/doexercise/doexercise",
     "pages/me/me",
     "pages/course/course",
@@ -11,8 +13,7 @@
     "pages/subjectselect/subjectselect",
     "pages/questbank/questbank",
     "pages/login/login",
-    "pages/phonelogin/phonelogin",
-    "pages/quesbankdetail/quesbankdetail"
+    "pages/exerciseres/exerciseres"
   ],
   "window": {
     "backgroundTextStyle": "light",

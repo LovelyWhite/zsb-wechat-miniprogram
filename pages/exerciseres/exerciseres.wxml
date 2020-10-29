@@ -1,0 +1,65 @@
+<view class="container">
+	<cu-custom bgColor="bg-gradual-blue" isCustom="{{true}}">
+		<view slot="backText">主页</view>
+		<view slot="content">答卷</view>
+	</cu-custom>
+	<scroll-view class="bg-white" scroll-y style=" flex: 1;height: 1px;">
+		<view class="flex justify-center;align-center" style="flex-direction:column">
+			<text class="margin-tb-lg font-df">得分</text>
+			<text class="text-red" style="font-size:30px;">{{score}}</text>
+		</view>
+
+		<wux-accordion-group title="简答题不计入总分" default-current="{{ ['0', '1'] }}">
+			<wux-accordion wx:for="{{questions}}" wx:key="*this" title="第{{index+1}}题 {{item.type}}">
+				<span wx:if="{{false == judge[index]}}" class="text-red text-xxl">回答错误</span>
+				<span wx:if="{{true == judge[index]}}" class="text-green text-xxl">回答正确</span>
+				<span wx:if="{{undefined ==judge[index] }}" class="text-orange text-xxl">简答题请自行判断</span>
+				<view>
+					<span>标准答案</span>
+					<view class=" padding">
+						<span wx:if="{{item.type=='单选'|| item.type=='多选'}}">
+							<span wx:for="{{item.cqans}}" wx:key="*this" wx:for-index="cqidnex" wx:for-item="cqitem">
+								<span class="text-green">{{cqitem}} </span>
+							</span>
+						</span>
+						<span wx:if="{{item.type == '简答'||item.type == '改错'}}">
+							{{item.saand}}
+						</span>
+						<span wx:if="{{item.type == '填空'}}">
+							<span wx:for="{{item.fbans}}" wx:key="*this" wx:for-index="fbidnex" wx:for-item="fbitem">
+								<span class="text-green">{{fbitem}} </span>
+							</span>
+						</span>
+					</view>
+				</view>
+				<view wx:if="{{true != judge[index]}}">
+					<span>你的答案</span>
+					<view wx:if="{{item.type=='单选'|| item.type=='多选'}}" class=" padding">
+						<span wx:for="{{storeAnswer[''+item.id]}}" wx:key="*this" wx:for-index="cqidnex" wx:for-item="cqitem">
+							<span class="text-red">{{cqitem}} </span>
+						</span>
+					</view>
+					<view wx:if="{{item.type == '简答'||item.type == '改错'}}" class=" padding">
+						{{storeAnswer[''+item.id]}}
+					</view>
+					<view wx:if="{{item.type == '填空'}}"  class=" padding">
+						<span wx:for="{{storeAnswer[''+item.id]}}" wx:key="*this" wx:for-index="fbidnex" wx:for-item="fbitem">
+							<span class="text-red">{{fbitem }} </span>
+						</span>
+					</view>
+				</view>
+				<view>题目</view>
+				<view class="flex justify-center padding">
+					<wemark style="width:100%" md="{{item.title}}" highlight type="wemark"></wemark>
+				</view>
+				<!-- 选择题 -->
+				<view wx:if="{{item.type=='单选'|| item.type=='多选'}}">
+					<view class="flex solid{{size?'s':''}} margin-xs radius align-center padding-lr-lg bg-white" wx:for="{{item.options}}" wx:key="key" wx:for-index="key" wx:for-item="value" style="flex-direction:row;}}">
+						<view class="text-lg padding-lr-sm">{{key}}</view>
+						<wemark md="{{value}}" link highlight type="wemark"></wemark>
+					</view>
+				</view>
+			</wux-accordion>
+		</wux-accordion-group>
+	</scroll-view>
+</view>

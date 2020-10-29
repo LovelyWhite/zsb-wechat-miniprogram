@@ -23,6 +23,11 @@
 					</view>
 				</view>
 			</view>
+			<view class="margin-lr">
+				<span class="text-blue text-xl margin-tb-sm">好课推荐</span>
+				<view>
+				</view>
+			</view>
 		</view>
 		<view class="cu-modal {{showModal?'show':''}}">
 			<view class="cu-dialog">
