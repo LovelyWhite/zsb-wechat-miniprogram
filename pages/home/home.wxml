@@ -5,27 +5,44 @@
 			<text class="text-ABC text-red">{{loginData.secondsubject?loginData.secondsubject.code:"xxxxxx"}}</text>
 		</view>
 	</view>
-	<scroll-view style=" flex: 1;height: 1px;" scroll-y="true" refresher-enabled refresher-triggered="{{isLoad}}" bindrefresherrefresh="refreshUI">
-		<swiper class="card-swiper bg-white" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
-			<swiper-item wx:for="{{swiperList}}" wx:key="index" class="{{cardCur==index?'cur':''}}" style="padding: 40rpx 0rpx 10rpx;">
+	<scroll-view style=" flex: 1;height: 1px;" scroll-y="true" refresher-enabled refresher-triggered="{{isLoad}}"
+		bindrefresherrefresh="refreshUI">
+		<swiper class="card-swiper bg-white" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper"
+			indicator-color="#8799a3" indicator-active-color="#0081ff">
+			<swiper-item wx:for="{{swiperList}}" wx:key="index" class="{{cardCur==index?'cur':''}}"
+				style="padding: 40rpx 0rpx 10rpx;">
 				<view class="swiper-item">
 					<image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
-					<video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
+					<video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover"
+						wx:if="{{item.type=='video'}}"></video>
 				</view>
 			</swiper-item>
 		</swiper>
 		<view class="bg-white">
-			<view class="cu-list grid col-4 no-border margin-bottom-sm">
+			<view class="cu-list grid col-4 no-border">
 				<view bindtap="navigateToTarget" data-item="{{item}}" class="cu-item" wx:for="{{part1}}" wx:key="index">
 					<view class="flex padding-sm justify-center align-center" style="flex-direction: column;">
 						<image style="width:30px;height:30px;" src="{{item.icon}}" />
-						<text class="text-df text-grey">{{item.type}}</text>
+						<text class="text-df text-gray">{{item.type}}</text>
 					</view>
 				</view>
 			</view>
 			<view class="margin-lr">
-				<span class="text-blue text-xl margin-tb-sm">好课推荐</span>
-				<view>
+				<span class="text-blue text-xl">好课推荐</span>
+				<view wx:for="{{goodCourse}}" wx:key="*this" bindtap="goCourseDetail" data-index="{{index}}" class="padding-tb-sm" style="display:flex">
+					<image class="radius" style="flex:2" mode="widthFix" src="{{item.poster}}"></image>
+					<view class="margin-lr-sm align-center" style="flex:3">
+						<view class="text-black text-lg line-one">
+							{{item.name}}
+						</view>
+						<view class="text-gray text-sm line-two">
+							{{item.intro}}</view>
+						<view class="flex align-center" style="justify-content: space-between;">
+							<view class="text-gray text-sm">讲师：<span>{{item.teacher.name}}</span></view>
+							<view wx:if="{{item.price.price != 0}}" class="text-red text-xl">¥{{item.price.price}}</view>
+							<view wx:if="{{item.price.price == 0}}" class="text-red text-xl">免费观看</view>
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>

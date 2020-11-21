@@ -1,0 +1,14 @@
+/* pages/xuedou/xuedou.wxss */
+.money-text{
+  font-size:40px;
+  color: black;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.money-container{
+  flex:1;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

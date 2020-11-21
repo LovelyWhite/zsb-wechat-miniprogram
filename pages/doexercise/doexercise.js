@@ -1,6 +1,3 @@
-const {
-  utf8Decode
-} = require("../../utils/util");
 var Base64 = require('base64-utf8');
 // pages/doexercise/doexercise.js
 const app = getApp();

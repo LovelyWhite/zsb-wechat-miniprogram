@@ -78,6 +78,7 @@ Page({
       icon: 'pay',
       color: 'red',
       badge: 0,
+      path:"/pages/xuedou/xuedou",
       name: '学豆'
     }, {
       icon: 'peoplefill',
@@ -96,7 +97,12 @@ Page({
       name: '建议'
     }]
   },
-
+  navigatePart3:function(e){
+    let item = e.currentTarget.dataset.item;
+    wx.navigateTo({
+      url: item.path,
+    })
+  },
   navigatePart1: function (e) {
     wx.navigateTo({
       url: e.currentTarget.dataset.nav
@@ -126,6 +132,7 @@ Page({
       openid: wx.getStorageSync("userInfo").openid
     });
     if (data && 200 == data.code) {
+      console.log(data.object)
       wx.setStorageSync('userInfo', data.object);
       this.updateInformation();
     }

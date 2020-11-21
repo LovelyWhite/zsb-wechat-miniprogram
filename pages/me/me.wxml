@@ -44,7 +44,7 @@ usertypeid: 1 -->
 	<view class="bg-white padding margin-tb-sm">
 		<text class="text-lg">更多服务</text>
 		<view class="cu-list grid col-4 no-border">
-			<view class="cu-item" wx:key="index" wx:for="{{part3}}">
+			<view class="cu-item" bindtap="navigatePart3" data-item="{{item}}" wx:key="index" wx:for="{{part3}}">
 				<view class="cuIcon-{{item.icon}} text-{{item.color}}">
 					<view class="cu-tag badge" wx:if="{{item.badge!=0}}">
 						<block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>

@@ -1,10 +1,13 @@
 {
   "pages": [
+
+    "pages/me/me",
+    "pages/xuedou/xuedou",
     "pages/home/home",
     "pages/quesbankdetail/quesbankdetail",
     "pages/phonelogin/phonelogin",
     "pages/doexercise/doexercise",
-    "pages/me/me",
+  
     "pages/course/course",
     "pages/mycourse/mycourse",
     "pages/myorder/myorder",
@@ -13,7 +16,8 @@
     "pages/subjectselect/subjectselect",
     "pages/questbank/questbank",
     "pages/login/login",
-    "pages/exerciseres/exerciseres"
+    "pages/exerciseres/exerciseres",
+    "pages/videoshow/videoshow"
   ],
   "window": {
     "backgroundTextStyle": "light",

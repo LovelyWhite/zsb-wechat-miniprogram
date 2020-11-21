@@ -26,7 +26,12 @@ const API = {
   getQuestionBankDetail: RequestUrl + "/questionbank/getdetailbyid",
   getAllSubject: RequestUrl + "/subject/getall",
   updateLearning: RequestUrl + "/user/updatelearning",
-  insertAnsRecord:RequestUrl + "/answerrecord/insert"
+  insertAnsRecord:RequestUrl + "/answerrecord/insert",
+  getCourse:RequestUrl+"/course/get",
+  getCourseDetail:RequestUrl+"/coursedetail/getbycourseid",
+  getCourseComment:RequestUrl+"/coursecomment/getbycourseid",
+  addCourseComment:RequestUrl+"/coursecomment/add",
+  pay:RequestUrl+"/wechat/pay",
 }
 module.exports = {
   API: API,

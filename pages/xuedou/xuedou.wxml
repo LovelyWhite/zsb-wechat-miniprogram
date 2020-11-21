@@ -1,0 +1,36 @@
+<view class="container">
+  <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">学豆</view>
+  </cu-custom>
+  <view class="bg-white money-container">
+    <view>我的学豆</view>
+    <view class="money-text">
+    {{restMoney}}
+    </view>
+    <button bindtap="showModal" class="cu-btn bg-blue lg">充值</button>
+    <button class="cu-btn bg-grey margin-tb-sm lg">学豆详情</button>
+  </view>
+  <view class="cu-modal bottom-modal {{showMoneyModal?'show':''}}" bindtap="hideModal">
+    <view class="cu-dialog" catchtap>
+      <view class="cu-bar bg-white">
+        <view class="action text-blue" bindtap="hideModal">取消</view>
+        <view class="action text-blue" bindtap="pay">确定</view>
+      </view>
+      <view class="grid col-3 padding-sm" style="width:100%">
+
+        <view wx:for="{{moneyOption}}" class="padding-xs" wx:key="index">
+          <button class="cu-btn orange lg block {{nowMoneyIndex==index?'bg-blue':'line-blue'}}" bindtap="chooseMoney"
+            data-index="{{index}}" style="width:220rpx"> {{item.name}}
+            <view class="cu-tag sm round {{nowMoneyIndex==index?'bg-white text-blue':'bg-blue'}}" wx:if="{{item.hot}}">
+              HOT
+            </view>
+          </button>
+        </view>
+      </view>
+      <view class="text-gray text-xs margin-bottom">
+        1元兑换1学豆
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,71 @@
+<view class="container">
+  <cu-custom id="navbar" bgColor="bg-gradual-blue" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">{{course.name}}</view>
+  </cu-custom>
+  <video style="width:100%;height:200px" src="{{courseDetail[nowIndex].link}}"></video>
+  <scroll-view id="tabbar" scroll-x class="bg-white nav">
+    <view class="flex text-center">
+      <view class="cu-item flex-sub {{0==tabIndex?'text-blue cur':''}}" data-tabbar="{{0}}" wx:key bindtap="tabSelect">
+        介绍
+      </view>
+      <view class="cu-item flex-sub {{1==tabIndex?'text-blue cur':''}}" data-tabbar="{{1}}" wx:key bindtap="tabSelect">
+        选课
+      </view>
+      <view class="cu-item flex-sub {{2==tabIndex?'text-blue cur':''}}" data-tabbar="{{2}}" wx:key bindtap="tabSelect">
+        讨论
+      </view>
+    </view>
+  </scroll-view>
+  <view class="bg-white">
+    <scroll-view scroll-y style="height:{{scrollViewHeight}}px" wx:if="{{tabIndex == 0}}">
+      <view style="display:flex;" class="padding-top">
+        <view class="cu-avatar xl round margin-lr" style="background-image:url({{course.poster}});"></view>
+        <view class="margin-right-sm" style="flex:1">
+          <view class=" text-black text-lg">
+            {{course.name}}
+          </view>
+          <view>
+            <view class="text-grey ">{{course.teacher.name}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="padding-lr-sm margin-tb-sm">
+        <view class="text-black text-lg padding-tb">课程简介</view>
+        <view class="text-grey">{{course.intro}}</view>
+      </view>
+      <view class="padding-lr-sm margin-tb-sm">
+        <view class="text-black text-lg padding-tb">老师简介</view>
+        <view class="text-grey">{{course.teacher.intro}}</view>
+      </view>
+    </scroll-view>
+
+    <scroll-view scroll-y style="height:{{scrollViewHeight}}px" wx:if="{{tabIndex == 1}}">
+      <view bindtap="changeVideo" data-index="{{index}}"
+        class="padding radius shadow {{nowIndex == index? 'bg-blue':'bg-white'}} light" wx:for="{{courseDetail}}">
+        <span class="line-one">{{item.title}}</span>
+      </view>
+    </scroll-view>
+    <view wx:if="{{tabIndex == 2}}">
+      <scroll-view scroll-y style="height:{{scrollViewHeight-50}}px">
+        <view class="bg-white">
+          <view wx:for="{{courseComment}}" wx:key class="padding-tb" style="display:flex">
+            <image src="{{item.user.avatar}}" mode="widthFix" class="margin-lr avatar"></image>
+            <view class="margin-right" style="flex:1">
+              <view class="text-lg text-black">{{item.user.nickname}}</view>
+              <view class="line-two text-gray">{{item.comment}}</view>
+              <view class="text-xs text-gray">{{item.time}}</view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="box">
+        <view class="cu-bar input" style="height:50px;">
+        <input class="solid-bottom cinput" value="{{comment}}" bindinput="inputComment" placeholder="发表评论" focus="{{false}}" maxlength="300"
+          cursor-spacing="10"></input>
+        <button class="cu-btn bg-blue shadow-blur" bindtap="sendComment" style="max-width:60px">发送</button>
+      </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -3,6 +3,7 @@ import {
   API,
   RequestUrl
 } from "../../utils/util"
+var Base64 = require('base64-utf8');
 const wxp = getApp().wxp;
 
 Page({
@@ -15,6 +16,7 @@ Page({
     showModal:false,
     modalTitle:"",
     modalContent:"",
+    goodCourse:[],
     loginData: wx.getStorageSync("userInfo"),
     statusBar: getApp().globalData.StatusBar,
     part1: [],
@@ -99,21 +101,48 @@ Page({
     this.setData({
       isLoad: true,
     })
-    let data = await wxp.requestWithToken(API.getAllType)
-    if (data && 200 == data.code) {
+    let dataType = await wxp.requestWithToken(API.getAllType)
+    if (dataType && 200 == dataType.code) {
       this.setData({
-        part1: data.object.map(v => {
+        part1: dataType.object.map(v => {
           v.icon = RequestUrl + "/images" + v.icon
           return v
         }),
-        isLoad: false,
       })
     }
+    let dataCourse = await wxp.requestWithToken(API.getCourse,{
+      secondsubjectid:this.data.loginData.secondsubject.id
+    });
+    if (dataType && 200 == dataType.code) {
+      console.log(dataCourse.object);
+      let data = dataCourse.object;
+      data = data.map(e=>{
+       e.intro =  Base64.decode(e.intro);
+       e.teacher.intro = Base64.decode(e.teacher.intro);
+       return e;
+      })
+      this.setData({
+        goodCourse:data,
+        isLoad:false,
+      })
+    }
+  },
+  goCourseDetail(e){
+    console.log(e);
+    let index= e.currentTarget.dataset.index;
+    wx.navigateTo({
+      url: '/pages/videoshow/videoshow?index='+index,
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(!this.data.loginData){
+      wx.switchTab({
+        url: '/pages/me/me',
+      })
+    }
     this.refreshUI();
   },
   /**

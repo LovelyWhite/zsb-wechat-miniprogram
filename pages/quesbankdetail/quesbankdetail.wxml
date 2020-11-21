@@ -1,9 +1,9 @@
-<view class="container">
+<view class="container bg-white">
 	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
 		<view slot="backText">返回</view>
 		<view slot="content">试题详情</view>
 	</cu-custom>
-	<scroll-view class="bg-white" scroll-y style=" flex: 1;height: 1px;" refresher-enabled refresher-triggered="{{isLoad}}" bindrefresherrefresh="updateQuestionBank">
+	<scroll-view scroll-y style=" flex: 1;height: 1px;" refresher-enabled refresher-triggered="{{isLoad}}" bindrefresherrefresh="updateQuestionBank">
 		<view class="flex padding margin" style="flex-direction:column;">
 			<view class="flex bg-gray text-black  text-sm radius padding" style="flex-direction:column">
 				<text class="margin-tb-xs" > 试题名称：{{item.name}}</text>
